@@ -45097,6 +45097,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  checkPoint: {fileID: 1554711287}
   attackPoint: {fileID: 0}
   attackRange: 0.64
   attackDamage: 100

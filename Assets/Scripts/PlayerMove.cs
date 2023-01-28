@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
     public InputAction playerControl;
     public static event Action OnJump;
 
+    public Transform checkPoint;
     public Transform attackPoint;
     public float attackRange= 0.64f;
     public int attackDamage = 100;
@@ -21,6 +22,7 @@ public class PlayerMove : MonoBehaviour
 
     public float speed;
     private float Move;
+    
 
     public float jumpForce;
 
@@ -58,6 +60,8 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        transform.position = checkPoint.transform.position;
         jumpCounter = numberOfJumps;
 
         rb = gameObject.GetComponent<Rigidbody2D>();
@@ -120,16 +124,25 @@ public class PlayerMove : MonoBehaviour
             if(jumpCounter >0 || !isJumping)
             {
 
-               
-                //Debug.Log($"{rb.velocity.y}");
-                if(rb.velocity.x < 0f && transform.parent)
-                {
-                    Debug.Log(transform.parent);
-                    rb.velocity = new Vector2(rb.velocity.x,jumpForce*0.8f+Time.deltaTime);
-                    jumpCounter -= 1;
-                   // Debug.Log($"jump{jumpCounter}");    
 
-                }else{
+                //Debug.Log($"{rb.velocity.y}");
+                if (rb.velocity.y > 0f)
+                {
+                    Debug.Log("slow" + transform.parent);
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce * 0.9f + Time.deltaTime);
+                    jumpCounter -= 1;
+                    // Debug.Log($"jump{jumpCounter}");    
+
+                } else if(rb.velocity.y<0f)
+                    {
+
+                    Debug.Log("faster");
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce * 1.2f + Time.deltaTime);
+                    jumpCounter -= 1;
+
+                
+                }else {
+                    Debug.Log("fast");
                     rb.velocity = new Vector2(rb.velocity.x,rb.velocity.y+jumpForce+Time.deltaTime);
                     jumpCounter -= 1;
                    // Debug.Log($"jump{jumpCounter}"); 
